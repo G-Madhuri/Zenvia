@@ -176,17 +176,6 @@ def schedule_outfit():
             "image": data.get("lower_image"),
         }
 
-        html_content = create_email_html(schedule_date, upper_data, lower_data)
-
-        ics_event = generate_ics_event(schedule_date, upper_data, lower_data)
-
-        send_email_with_ics(
-            email,
-            "Your Outfit is Scheduled! (Add to Calendar)",
-            html_content,
-            ics_event,
-        )
-
         entry = {
             "email": email,
             "schedule_date": schedule_date,
@@ -206,7 +195,7 @@ def schedule_outfit():
         with open("scheduled_outfits.json", "w") as f:
             json.dump(schedules, f, indent=4)
 
-        return jsonify({"success": True, "message": "Outfit scheduled + ICS attached!"})
+        return jsonify({"success": True, "message": "Outfit scheduled successfully!"})
 
     except Exception as e:
         print("Error in /api/schedule-outfit:", e)

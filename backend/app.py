@@ -357,7 +357,10 @@ def get_config():
     return jsonify({
         "CLOUDINARY_CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME", ""),
         "CLOUDINARY_UPLOAD_PRESET": os.getenv("CLOUDINARY_UPLOAD_PRESET", "virtual_wardrobe"),
-        "OPENWEATHER_API_KEY": os.getenv("OPENWEATHER_API_KEY", "")
+        "OPENWEATHER_API_KEY": os.getenv("OPENWEATHER_API_KEY", ""),
+        "EMAILJS_SERVICE_ID": os.getenv("EMAILJS_SERVICE_ID", ""),
+        "EMAILJS_TEMPLATE_ID": os.getenv("EMAILJS_TEMPLATE_ID", ""),
+        "EMAILJS_PUBLIC_KEY": os.getenv("EMAILJS_PUBLIC_KEY", "")
     })
 
 

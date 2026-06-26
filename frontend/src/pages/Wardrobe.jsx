@@ -16,6 +16,9 @@ export default function Wardrobe() {
     let CLOUD_NAME = ''
     let UPLOAD_PRESET = 'virtual_wardrobe'
     let WEATHER_KEY = ''
+    let EMAILJS_SERVICE_ID = ''
+    let EMAILJS_TEMPLATE_ID = ''
+    let EMAILJS_PUBLIC_KEY = ''
 
     async function fetchConfigAndInit() {
       try {
@@ -25,19 +28,39 @@ export default function Wardrobe() {
           CLOUD_NAME = config.CLOUDINARY_CLOUD_NAME || ''
           UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET || 'virtual_wardrobe'
           WEATHER_KEY = config.OPENWEATHER_API_KEY || ''
+          EMAILJS_SERVICE_ID = config.EMAILJS_SERVICE_ID || ''
+          EMAILJS_TEMPLATE_ID = config.EMAILJS_TEMPLATE_ID || ''
+          EMAILJS_PUBLIC_KEY = config.EMAILJS_PUBLIC_KEY || ''
         }
       } catch (err) {
         console.error('Failed to fetch runtime config:', err)
       }
 
-      // Inject Chart.js if not already present
-      if (!window.Chart) {
-        const chartScript = document.createElement('script')
-        chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js'
-        chartScript.onload = () => initApp()
-        document.head.appendChild(chartScript)
+      // Load EmailJS SDK
+      if (!window.emailjs) {
+        const ejsScript = document.createElement('script')
+        ejsScript.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
+        ejsScript.onload = () => {
+          // Inject Chart.js after EmailJS
+          if (!window.Chart) {
+            const chartScript = document.createElement('script')
+            chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js'
+            chartScript.onload = () => initApp()
+            document.head.appendChild(chartScript)
+          } else {
+            initApp()
+          }
+        }
+        document.head.appendChild(ejsScript)
       } else {
-        initApp()
+        if (!window.Chart) {
+          const chartScript = document.createElement('script')
+          chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js'
+          chartScript.onload = () => initApp()
+          document.head.appendChild(chartScript)
+        } else {
+          initApp()
+        }
       }
     }
 
@@ -464,10 +487,59 @@ export default function Wardrobe() {
         const scheduleBtn = document.getElementById('schedule-outfit')
         scheduleBtn.textContent = 'Scheduling...'; scheduleBtn.disabled = true
         try {
+          // Step 1: Save schedule to backend
           const response = await fetch(`${BACKEND_CONFIG.BASE_URL}${BACKEND_CONFIG.SCHEDULE_ENDPOINT}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
           const resData = await response.json()
           if (!response.ok) throw new Error(resData.error || `HTTP error! Status: ${response.status}`)
-          await Modal.alert('Scheduled!', 'Your outfit is scheduled and email sent!', 'success')
+
+          // Step 2: Send email via EmailJS from the browser
+          if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+            throw new Error('EmailJS is not configured. Please add EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY to HF Space secrets.')
+          }
+
+          const formattedDate = new Date(payload.schedule_date + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+          // Build the exact same HTML as create_email_html() in Python
+          const htmlBody = `
+            <html>
+            <body style="font-family: Arial; padding: 20px;">
+              <h2 style="color: #4F46E5;">Your Outfit is Scheduled!</h2>
+              <p><strong>Date:</strong> ${formattedDate}</p>
+
+              <h3>Upper Outfit</h3>
+              <p>
+                <strong>Name:</strong> ${payload.upper_name || 'N/A'}<br>
+                <strong>Brand:</strong> ${payload.upper_brand || 'N/A'}<br>
+                <strong>Type:</strong> ${payload.upper_type || 'N/A'}
+              </p>
+              <img src="${upperDrop.dataset.imageUrl}" width="220" style="border-radius: 8px;">
+
+              <h3>Lower Outfit</h3>
+              <p>
+                <strong>Name:</strong> ${payload.lower_name || 'N/A'}<br>
+                <strong>Brand:</strong> ${payload.lower_brand || 'N/A'}<br>
+                <strong>Type:</strong> ${payload.lower_type || 'N/A'}
+              </p>
+              <img src="${lowerDrop.dataset.imageUrl}" width="220" style="border-radius: 8px;">
+
+              <br><br>
+              <p style="color: gray;">— Zenvia Virtual Wardrobe</p>
+            </body>
+            </html>
+          `
+
+          await window.emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              to_email: userEmail,
+              subject: `Your Outfit is Scheduled for ${formattedDate}!`,
+              html_body: htmlBody,
+            },
+            EMAILJS_PUBLIC_KEY
+          )
+
+          await Modal.alert('Scheduled!', 'Your outfit is scheduled and an email has been sent!', 'success')
         } catch (err) {
           await Modal.alert('Error', `Failed to schedule outfit: ${err.message}`, 'error')
         }
