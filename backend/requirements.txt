@@ -3,7 +3,7 @@ flask-cors
 python-dotenv
 requests
 opencv-python-headless
-mediapipe
+mediapipe==0.10.14
 numpy
 pandas
 beautifulsoup4
