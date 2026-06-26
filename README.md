@@ -1,13 +1,3 @@
----
-title: Zenvia
-emoji: 👗
-colorFrom: purple
-colorTo: yellow
-sdk: docker
-pinned: false
-app_port: 7860
----
-
 # Zenvia: An Integrated System for Personalized Sizing, Color Recommendations, Virtual Wardrobe Management, and Fashion Assistance
 
 Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unifies computer vision, deep learning, web scraping, and generative AI into a cohesive style ecosystem. Built using a robust Flask backend and an interactive React frontend, Zenvia provides automated size estimation, skin-tone based seasonal color matching, live product search, a virtual wardrobe planner, and an AI-driven personal shopper.
