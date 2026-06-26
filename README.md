@@ -21,7 +21,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 * **Mechanism:** Tracks critical body landmarks via a real-time webcam feed. Calculates pixel distance ratios (calibrated by inter-pupillary distance) to estimate torso height and shoulder width.
 * **Outcome:** Maps body dimensions against standard sizing profiles (XS to XXXL) to output the user's best clothing fit without manual measurements.
 
-### 2. Deep Learning Seasonal Color Analysis
+### 2. Personal Color Analysis
 * **Technology:** 5-fold cross-validated ResNet-50 Convolutional Neural Network (CNN) Ensemble.
 * **Dataset:** Trained on Roboflow's "Eyes, Skin, and Hair Colors" dataset containing 6,770 curated images.
 * **Classification:** Classifies the user's skin undertone into one of four seasons:
