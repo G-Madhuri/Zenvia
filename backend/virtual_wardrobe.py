@@ -44,7 +44,7 @@ def send_email_with_ics(receiver_email, subject, html_content, ics_content):
 
         try:
             ics_base64 = base64.b64encode(ics_content.encode("utf-8")).decode("utf-8")
-            from_email = "Zenvia <onboarding@resend.dev>"
+            from_email = "Zenvia <noreply@zenvia.schedule.com>"
             payload = {
                 "from": from_email,
                 "to": receiver_email,
