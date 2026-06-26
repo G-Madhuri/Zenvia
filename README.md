@@ -136,7 +136,7 @@ npm run dev
 
 ---
 
-## 🏗️ Production Build & Single-Port Server Execution
+##  Production Build & Single-Port Server Execution
 To serve the complete full-stack project under a single port (ideal for deployments):
 
 1. Compile the React build assets inside the `frontend` directory:
