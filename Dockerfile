@@ -3,6 +3,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 FROM python:3.10-slim
 
+ENV PYTHONUNBUFFERED=1
+
 # ── System packages ───────────────────────────────────────────────────────────
 # libgl / libglib are required by OpenCV and MediaPipe on headless Linux.
 # Node.js 18 is needed to build the React frontend inside the container.

@@ -1,6 +1,7 @@
 import os
 from flask import Blueprint, request, jsonify, render_template
 import json
+import sys
 from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -50,17 +51,20 @@ def send_email_with_ics(receiver_email, subject, html_content, ics_content):
         )
         msg.attach(attachment)
 
+        if not SMTP_SERVER:
+            raise ValueError("SMTP_SERVER environment variable is not configured. Please set it in Hugging Face Repository Secrets.")
+
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
             server.send_message(msg)
 
-        print("Email + ICS sent to:", receiver_email)
+        print(f"Email + ICS sent to: {receiver_email}", flush=True)
         return True
 
     except Exception as e:
-        print("ICS Email failed:", e)
-        return False
+        print(f"ICS Email failed: {e}", file=sys.stderr, flush=True)
+        raise e
 
 
 def create_email_html(schedule_date, upper, lower):

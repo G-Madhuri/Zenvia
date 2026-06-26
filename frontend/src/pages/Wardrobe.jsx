@@ -465,9 +465,12 @@ export default function Wardrobe() {
         scheduleBtn.textContent = 'Scheduling...'; scheduleBtn.disabled = true
         try {
           const response = await fetch(`${BACKEND_CONFIG.BASE_URL}${BACKEND_CONFIG.SCHEDULE_ENDPOINT}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-          if (!response.ok) throw new Error(response.status)
+          const resData = await response.json()
+          if (!response.ok) throw new Error(resData.error || `HTTP error! Status: ${response.status}`)
           await Modal.alert('Scheduled!', 'Your outfit is scheduled and email sent!', 'success')
-        } catch { await Modal.alert('Error', 'Failed to schedule outfit.', 'error') }
+        } catch (err) {
+          await Modal.alert('Error', `Failed to schedule outfit: ${err.message}`, 'error')
+        }
         scheduleBtn.textContent = 'Schedule Outfit'; scheduleBtn.disabled = false
       }
 
