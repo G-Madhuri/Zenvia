@@ -1,0 +1,89 @@
+/* Original virtual_wardrobe.html styles — preserved exactly */
+.drop-zone { transition: all 0.3s ease; }
+.drop-zone.drag-over { background-color: rgba(72,39,144,0.1); border-color: #482790; transform: scale(1.05); }
+
+.loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #482790; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: none; margin: 0 auto; }
+@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+.color-swatch { width: 20px; height: 20px; border-radius: 50%; display: inline-block; margin-right: 5px; border: 1px solid #ccc; }
+
+.outfit-item { transition: all 0.3s ease; position: relative; }
+.outfit-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+.relative { position: relative; }
+
+.add-preview-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 38px; height: 38px; border-radius: 10px;
+  background-color: #482790; border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: all 0.25s ease;
+}
+.add-preview-btn:hover { background-color: #3a1f72; transform: scale(1.05); }
+.add-preview-btn:active { transform: scale(0.95); }
+body.dark .add-preview-btn { border-color: #2d2d2d; }
+
+.form-input, .form-select { background-color: #fff; border: 1px solid #dedede; border-radius: 0.375rem; padding: 0.5rem; color: #1a1a1a; }
+body.dark .form-input, body.dark .form-select { background-color: #3d3d3d; border-color: #555; color: #f9f5ec; }
+.form-input:focus, .form-select:focus { outline: none; border-color: #482790; box-shadow: 0 0 0 3px rgba(72,39,144,0.1); }
+
+.stats-text { color: #6e6e6e; }
+body.dark .stats-text { color: #b8b8b8; }
+
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal { background: #fff; border-radius: 1rem; box-shadow: 0 20px 60px -10px rgba(0,0,0,0.3); width: 90%; max-width: 500px; transform: translateY(20px); transition: transform 0.3s ease; overflow: hidden; }
+body.dark .modal { background: #2d2d2d; }
+.modal-overlay.active .modal { transform: translateY(0); }
+
+.modal-header { background: linear-gradient(135deg, #482790, #3a1f72); color: white; padding: 1.5rem; text-align: center; }
+.modal-body { padding: 2rem; }
+.modal-footer { padding: 1.5rem; background: #f8fafc; display: flex; justify-content: flex-end; gap: 1rem; }
+body.dark .modal-footer { background: #3d3d3d; }
+.modal-title { font-size: 1.5rem; font-weight: bold; margin: 0; }
+.modal-message { color: #6e6e6e; margin-bottom: 1.5rem; line-height: 1.5; }
+body.dark .modal-message { color: #b8b8b8; }
+
+.modal-input { width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; transition: all 0.3s ease; margin-bottom: 1rem; }
+body.dark .modal-input { background: #3d3d3d; border-color: #555; color: #f9f5ec; }
+.modal-input:focus { outline: none; border-color: #482790; box-shadow: 0 0 0 3px rgba(72,39,144,0.1); }
+
+.modal-success .modal-header { background: linear-gradient(135deg, #10b981, #059669); }
+.modal-error   .modal-header { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.modal-warning .modal-header { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+.hidden { display: none !important; }
+
+/* Card & button styles for wardrobe page */
+.card { background: #fff; border-radius: 0.75rem; transition: all 0.5s; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.15); }
+body.dark .card { background: #2d2d2d; }
+.card:hover { transform: translateY(-0.5rem); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3); }
+.btn-primary { background-color: #482790; color: #f9f5ec; }
+.btn-primary:hover { background-color: #3a1f72; }
+.btn-accent { background-color: #ffd700; color: #1a1a1a; }
+.btn-accent:hover { background-color: #f4d35e; }
+.btn-secondary { background-color: transparent; color: #482790; border: 2px solid #482790; }
+body.dark .btn-secondary { color: #f9f5ec; border-color: #f9f5ec; }
+.btn-secondary:hover { background-color: #482790; color: #f9f5ec; }
+
+/* Fix outfit card buttons overflowing */
+.outfit-item .flex { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.outfit-item button {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.75rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.outfit-item .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.outfit-item .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.outfit-item .rounded { border-radius: 6px; }
+.outfit-item .text-xs { font-size: 0.75rem; }

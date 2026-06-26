@@ -1,0 +1,12 @@
+backend/models/*.pth
+backend/models/**/*.pth
+backend/.env
+frontend/.env
+frontend/node_modules/
+frontend/dist/
+**/__pycache__/
+.env
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+*.log

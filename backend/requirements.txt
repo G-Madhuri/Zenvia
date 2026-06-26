@@ -1,0 +1,15 @@
+flask
+flask-cors
+python-dotenv
+requests
+opencv-python-headless
+mediapipe
+numpy
+pandas
+beautifulsoup4
+Pillow
+torch
+torchvision
+google-search-results
+gunicorn
+huggingface_hub

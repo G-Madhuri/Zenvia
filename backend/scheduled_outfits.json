@@ -1,0 +1,36 @@
+[
+    {
+        "email": "pgeetha3579@gmail.com",
+        "schedule_date": "2026-06-20",
+        "upper_data": {
+            "name": "DEELMO Men's Casual Button Down Long Sleeve Linen Shirt",
+            "brand": "Amazon.in",
+            "type": "Topwear",
+            "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS11T6H8N_Md1WRx1XF5AwZMqZZ70GcVftSzwpt0gqQ63EGFK93uAAozuNbTzTy5qxkKA1eDdGTbTqI--Blqs6Z6f09oxeTMDoG7r7WLUge"
+        },
+        "lower_data": {
+            "name": "My lower outfit",
+            "brand": "Unknown",
+            "type": "Unknown",
+            "image": "https://res.cloudinary.com/dvet5mnyr/image/upload/v1781346423/wardrobe/hupizqxovhopbfqgky3a.jpg"
+        },
+        "saved_at": "2026-06-13T15:57:53.721926"
+    },
+    {
+        "email": "pgeetha3579@gmail.com",
+        "schedule_date": "2026-06-20",
+        "upper_data": {
+            "name": "Urban Buccachi Men's Regular Fit Shirt",
+            "brand": "AJIO.com",
+            "type": "Topwear",
+            "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSFpT6QB07ktsRfQ9SO3Wh1Nks-S1V47rGkdz8EtgU1jvKEryd3j3uokZjDyGUCk7vxiZBtJ9vTJQoNkM7LZy2X1EjxSnh0Cgtno5iXnLKN"
+        },
+        "lower_data": {
+            "name": "My lower outfit",
+            "brand": "Unknown",
+            "type": "Unknown",
+            "image": "https://res.cloudinary.com/dvet5mnyr/image/upload/v1781348125/wardrobe/sxds6chbiro3war40t3g.jpg"
+        },
+        "saved_at": "2026-06-13T16:27:52.142172"
+    }
+]
