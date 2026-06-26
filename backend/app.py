@@ -352,6 +352,15 @@ def get_color_products():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/config", methods=["GET"])
+def get_config():
+    return jsonify({
+        "CLOUDINARY_CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME", ""),
+        "CLOUDINARY_UPLOAD_PRESET": os.getenv("CLOUDINARY_UPLOAD_PRESET", "virtual_wardrobe"),
+        "OPENWEATHER_API_KEY": os.getenv("OPENWEATHER_API_KEY", "")
+    })
+
+
 # ── Serve React in production ─────────────────────────────────────────────────
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")

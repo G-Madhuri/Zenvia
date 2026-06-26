@@ -4,10 +4,6 @@ import "./Wardrobe.css"
 
 import { useEffect, useRef } from 'react'
 
-const CLOUD_NAME    = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || ''
-const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET     || 'virtual_wardrobe'
-const WEATHER_KEY   = import.meta.env.VITE_WEATHER_API_KEY        || ''
-
 export default function Wardrobe() {
   const initialized = useRef(false)
 
@@ -17,15 +13,35 @@ export default function Wardrobe() {
     // Tailwind loaded via index.html
     initialized.current = true
 
-    // Inject Chart.js if not already present
-    if (!window.Chart) {
-      const chartScript = document.createElement('script')
-      chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js'
-      chartScript.onload = () => initApp()
-      document.head.appendChild(chartScript)
-    } else {
-      initApp()
+    let CLOUD_NAME = ''
+    let UPLOAD_PRESET = 'virtual_wardrobe'
+    let WEATHER_KEY = ''
+
+    async function fetchConfigAndInit() {
+      try {
+        const response = await fetch('/api/config')
+        if (response.ok) {
+          const config = await response.json()
+          CLOUD_NAME = config.CLOUDINARY_CLOUD_NAME || ''
+          UPLOAD_PRESET = config.CLOUDINARY_UPLOAD_PRESET || 'virtual_wardrobe'
+          WEATHER_KEY = config.OPENWEATHER_API_KEY || ''
+        }
+      } catch (err) {
+        console.error('Failed to fetch runtime config:', err)
+      }
+
+      // Inject Chart.js if not already present
+      if (!window.Chart) {
+        const chartScript = document.createElement('script')
+        chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js'
+        chartScript.onload = () => initApp()
+        document.head.appendChild(chartScript)
+      } else {
+        initApp()
+      }
     }
+
+    fetchConfigAndInit()
 
     function initApp() {
       // ── State ──────────────────────────────────────────────────────────────
