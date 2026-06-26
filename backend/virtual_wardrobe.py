@@ -37,34 +37,75 @@ END:VCALENDAR
 
 
 def send_email_with_ics(receiver_email, subject, html_content, ics_content):
-    try:
-        msg = MIMEMultipart()
-        msg["From"] = SENDER_EMAIL
-        msg["To"] = receiver_email
-        msg["Subject"] = subject
+    resend_api_key = os.getenv("RESEND_API_KEY")
+    if resend_api_key:
+        import base64
+        import urllib.request
 
-        msg.attach(MIMEText(html_content, "html"))
+        try:
+            ics_base64 = base64.b64encode(ics_content.encode("utf-8")).decode("utf-8")
+            from_email = "Zenvia <onboarding@resend.dev>"
+            payload = {
+                "from": from_email,
+                "to": receiver_email,
+                "subject": subject,
+                "html": html_content,
+                "attachments": [
+                    {
+                        "content": ics_base64,
+                        "filename": "outfit_reminder.ics"
+                    }
+                ]
+            }
 
-        attachment = MIMEText(ics_content, "calendar; method=PUBLISH")
-        attachment.add_header(
-            "Content-Disposition", "attachment", filename="outfit_reminder.ics"
-        )
-        msg.attach(attachment)
+            req = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {resend_api_key}",
+                    "Content-Type": "application/json"
+                },
+                method="POST"
+            )
 
-        if not SMTP_SERVER:
-            raise ValueError("SMTP_SERVER environment variable is not configured. Please set it in Hugging Face Repository Secrets.")
+            with urllib.request.urlopen(req) as response:
+                res_body = response.read().decode("utf-8")
+                print(f"Resend API Response: {res_body}", flush=True)
 
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SENDER_EMAIL, SENDER_PASSWORD)
-            server.send_message(msg)
+            print(f"Email + ICS sent via Resend to: {receiver_email}", flush=True)
+            return True
+        except Exception as e:
+            print(f"Resend Email failed: {e}", file=sys.stderr, flush=True)
+            raise e
+    else:
+        try:
+            msg = MIMEMultipart()
+            msg["From"] = SENDER_EMAIL
+            msg["To"] = receiver_email
+            msg["Subject"] = subject
 
-        print(f"Email + ICS sent to: {receiver_email}", flush=True)
-        return True
+            msg.attach(MIMEText(html_content, "html"))
 
-    except Exception as e:
-        print(f"ICS Email failed: {e}", file=sys.stderr, flush=True)
-        raise e
+            attachment = MIMEText(ics_content, "calendar; method=PUBLISH")
+            attachment.add_header(
+                "Content-Disposition", "attachment", filename="outfit_reminder.ics"
+            )
+            msg.attach(attachment)
+
+            if not SMTP_SERVER:
+                raise ValueError("SMTP_SERVER environment variable is not configured. Please set it in Hugging Face Repository Secrets or set RESEND_API_KEY.")
+
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                server.login(SENDER_EMAIL, SENDER_PASSWORD)
+                server.send_message(msg)
+
+            print(f"Email + ICS sent via SMTP to: {receiver_email}", flush=True)
+            return True
+
+        except Exception as e:
+            print(f"ICS Email failed: {e}", file=sys.stderr, flush=True)
+            raise e
 
 
 def create_email_html(schedule_date, upper, lower):
