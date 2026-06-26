@@ -41,6 +41,7 @@ def send_email_with_ics(receiver_email, subject, html_content, ics_content):
     if resend_api_key:
         import base64
         import urllib.request
+        import urllib.error
 
         try:
             ics_base64 = base64.b64encode(ics_content.encode("utf-8")).decode("utf-8")
@@ -62,15 +63,20 @@ def send_email_with_ics(receiver_email, subject, html_content, ics_content):
                 "https://api.resend.com/emails",
                 data=json.dumps(payload).encode("utf-8"),
                 headers={
-                    "Authorization": f"Bearer {resend_api_key}",
+                    "Authorization": f"Bearer {resend_api_key.strip()}",
                     "Content-Type": "application/json"
                 },
                 method="POST"
             )
 
-            with urllib.request.urlopen(req) as response:
-                res_body = response.read().decode("utf-8")
-                print(f"Resend API Response: {res_body}", flush=True)
+            try:
+                with urllib.request.urlopen(req) as response:
+                    res_body = response.read().decode("utf-8")
+                    print(f"Resend API Response: {res_body}", flush=True)
+            except urllib.error.HTTPError as http_err:
+                error_body = http_err.read().decode("utf-8")
+                print(f"Resend HTTP {http_err.code} Error: {error_body}", file=sys.stderr, flush=True)
+                raise Exception(f"Resend API error {http_err.code}: {error_body}")
 
             print(f"Email + ICS sent via Resend to: {receiver_email}", flush=True)
             return True
