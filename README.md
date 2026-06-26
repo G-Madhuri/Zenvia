@@ -24,21 +24,17 @@ Zenvia is a full-stack, Integrated fashion intelligence platform that unifies co
 * **Technology:** SerpAPI Google Shopping search engine.
 * **Mechanism:** Converts sizing and color suggestions directly into parameterized search queries. Retrieves real-time results from top Indian retailers (Amazon, AJIO, Flipkart, Myntra), extracting price, rating, thumbnail, and purchase links.
 
-### 4. Interactive Virtual Wardrobe Manager
-* **Technology:** Cloudinary, LocalStorage, Chart.js.
+### 4. Interactive Virtual Wardrobe Manager & Outfit Scheduler
+* **Technology:** Cloudinary, LocalStorage, Chart.js, EmailJS SDK, Flask, Python Background Threads.
 * **Features:**
   * **Uploads:** Direct image upload to Cloudinary with drag-and-drop interface support.
-  * **Outfit Builder:** Drag-and-drop upper and lower clothing items onto a canvas to preview look matches.
-  * **Weather Assistant:** Leverages the OpenWeather API to display current conditions and suggest appropriate outfits (e.g. breathable fabrics for hot weather or waterproof jackets for rain).
-  * **Statistics:** Tracks inventory characteristics (e.g., number of favorites, item usage count) and displays visual distribution charts.
+  * **Outfit Builder:** Drag-and-drop upper and lower clothing items onto a canvas to preview outfit combinations.
+  * **Weather Assistant:** Leverages the OpenWeather API to display current conditions and recommend suitable outfits (e.g., breathable fabrics for hot weather or waterproof jackets for rain).
+  * **Outfit Scheduling:** Users can schedule outfits for future dates with instant email confirmation sent using the EmailJS SDK.
+  * **Morning Reminder System:** A Flask background thread periodically scans scheduled outfits and automatically sends morning reminder emails (6:00 AM–12:00 PM IST) via the EmailJS REST API on the scheduled day.
+  * **Statistics:** Tracks wardrobe insights such as favorites, outfit usage frequency, and clothing distribution using interactive Chart.js visualizations.
 
-### 5. Multi-Stage Outfit Scheduler & Reminders
-* **Technology:** EmailJS SDK client-side, requests-based REST API on Flask backend, python background threads.
-* **Dual-Email Flow:**
-  1. **Immediate Email:** When a user schedules an outfit, the frontend triggers EmailJS to send a formatted HTML email confirming the schedule.
-  2. **Morning-of Reminder:** A background thread running on the Flask server scans scheduled outfits periodically. If it detects an outfit scheduled for "today" (in Indian Standard Time UTC+5:30) between 6:00 AM and 12:00 PM, it calls the EmailJS REST API to send a second morning reminder email. 
-
-### 6. Conversational AI Fashion Stylist (FashionBot)
+### 5. Conversational AI Fashion Stylist (FashionBot)
 * **Technology:** Mistral-7B LLM (routed via HTTP).
 * **Mechanism:** Context-aware styling advisor that responds to queries about seasonal fashion tips, trend guidelines, and customized clothing coordination.
 
