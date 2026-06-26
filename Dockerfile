@@ -32,7 +32,7 @@ COPY frontend/package.json frontend/package-lock.json ./frontend/
 WORKDIR /app/frontend
 RUN npm ci
 
-COPY frontend/ ./frontend/
+COPY frontend/ ./
 
 # Vite bakes these into the JS bundle at build time.
 # Set them as Build-time variables in the HF Space settings UI.
