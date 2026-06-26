@@ -4,6 +4,10 @@ Zenvia is a full-stack, Integrated fashion intelligence platform that unifies co
 
 ---
 
+Website Link: https://huggingface.co/spaces/G-Madhuri/Zenvia_project
+Models Link: https://huggingface.co/G-Madhuri/zenvia-models
+
+
 ## Core Modules & Features
 
 ### 1. Computer Vision-Based Size Estimation
@@ -169,7 +173,7 @@ The container is built as a multi-stage environment:
 ---
 
 ##  EmailJS Template Customization
-For the outfit scheduling and morning reminder templates to format correctly, create a template in EmailJS (default ID: `template_f56nu7k`) with the following settings:
+For the outfit scheduling and morning reminder templates to format correctly, create a template in EmailJS with the following settings:
 * **To Email Field:** `{{to_email}}`
 * **Subject Field:** `{{subject}}`
 * **Template Body (switch to HTML editor `<>`):**
@@ -186,7 +190,6 @@ For the outfit scheduling and morning reminder templates to format correctly, cr
 * **Authors:** 
   1. Madhuri Gottumukkala 
   2. Peesari Sathvik Reddy
-  3. Prachi Dusa 
 * **Institution:** Department of AI & ML, Chaitanya Bharathi Institute of Technology (CBIT), Hyderabad, India.
 
 ---
