@@ -1,6 +1,6 @@
 # Zenvia: An Integrated System for Personalized Sizing, Color Recommendations, Virtual Wardrobe Management, and Fashion Assistance
 
-Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unifies computer vision, deep learning, web scraping, and generative AI into a cohesive style ecosystem. Built using a robust Flask backend and an interactive React frontend, Zenvia provides automated size estimation, skin-tone based seasonal color matching, live product search, a virtual wardrobe planner, and an AI-driven personal shopper.
+Zenvia is a full-stack, Integrated fashion intelligence platform that unifies computer vision, deep learning, web scraping, and generative AI into a cohesive style ecosystem. Built using a robust Flask backend and an interactive React frontend, Zenvia provides automated size estimation, skin-tone based seasonal color matching, live product search, a virtual wardrobe planner, and an AI-driven personal shopper.
 
 ---
 
@@ -25,7 +25,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 * **Mechanism:** Converts sizing and color suggestions directly into parameterized search queries. Retrieves real-time results from top Indian retailers (Amazon, AJIO, Flipkart, Myntra), extracting price, rating, thumbnail, and purchase links.
 
 ### 4. Interactive Virtual Wardrobe Manager
-* **Technology:** Cloudinary (Unsigned upload preset), LocalStorage, Chart.js.
+* **Technology:** Cloudinary, LocalStorage, Chart.js.
 * **Features:**
   * **Uploads:** Direct image upload to Cloudinary with drag-and-drop interface support.
   * **Outfit Builder:** Drag-and-drop upper and lower clothing items onto a canvas to preview look matches.
@@ -36,7 +36,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 * **Technology:** EmailJS SDK client-side, requests-based REST API on Flask backend, python background threads.
 * **Dual-Email Flow:**
   1. **Immediate Email:** When a user schedules an outfit, the frontend triggers EmailJS to send a formatted HTML email confirming the schedule.
-  2. **Morning-of Reminder:** A background thread running on the Flask server scans scheduled outfits periodically. If it detects an outfit scheduled for "today" (in Indian Standard Time UTC+5:30) between 6:00 AM and 12:00 PM, it calls the EmailJS REST API to send a second morning reminder email. Thread locks ensure safe file read/writes to `scheduled_outfits.json`.
+  2. **Morning-of Reminder:** A background thread running on the Flask server scans scheduled outfits periodically. If it detects an outfit scheduled for "today" (in Indian Standard Time UTC+5:30) between 6:00 AM and 12:00 PM, it calls the EmailJS REST API to send a second morning reminder email. 
 
 ### 6. Conversational AI Fashion Stylist (FashionBot)
 * **Technology:** Mistral-7B LLM (routed via HTTP).
@@ -100,8 +100,6 @@ EMAILJS_SERVICE_ID=your_emailjs_service_id
 EMAILJS_TEMPLATE_ID=your_emailjs_template_id
 EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 ```
-
-*Note: Frontend environment variables (`VITE_CLOUDINARY_CLOUD_NAME`, `VITE_CLOUDINARY_PRESET`, `VITE_WEATHER_API_KEY`) are no longer required! The React app fetches all configurations dynamically at runtime via the backend `/api/config` endpoint.*
 
 ---
 
