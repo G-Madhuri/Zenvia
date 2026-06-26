@@ -11,6 +11,9 @@ export default function Camera() {
   useEffect(() => {
     let stream = null
 
+    // Reset backend state so previous session's locked size is cleared
+    fetch('/api/reset-capture', { method: 'POST' }).catch(() => {})
+
     async function startCamera() {
       try {
         stream = await navigator.mediaDevices.getUserMedia({

@@ -148,22 +148,25 @@ frame_state = {
 }
 
 
-def is_stable(measurements, tolerance=8.0):
+def is_stable(measurements, tolerance=3.0):
     if len(measurements) < 15:
         return False
     return np.array(measurements[-15:]).std() < tolerance
 
 
 def reset_frame_state():
+    global pose_model
     frame_state["stable"]         = False
     frame_state["final_size"]     = None
     frame_state["final_shoulder"] = None
     frame_state["final_torso"]    = None
     frame_state["measurements"]   = []
     frame_state["last_move_time"] = time.time()
+    # Recreate pose model to flush MediaPipe's temporal smoothing buffer
+    pose_model = mp_pose.Pose()
 
 
-def estimate_size(shoulder, torso, tolerance=8.0):
+def estimate_size(shoulder, torso, tolerance=2.0):
     best_match, best_dist = None, float("inf")
     for _, row in sizes_df.iterrows():
         s_mid = (row["Shoulder_Min_cm"] + row["Shoulder_Max_cm"]) / 2
