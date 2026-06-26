@@ -1,5 +1,5 @@
 ---
-title: Zenvia Fashion Intelligence
+title: Zenvia
 emoji: 👗
 colorFrom: purple
 colorTo: yellow
@@ -14,7 +14,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 
 ---
 
-## 🌟 Core Modules & Features
+## Core Modules & Features
 
 ### 1. Computer Vision-Based Size Estimation
 * **Technology:** OpenCV, MediaPipe Pose tracking, and rule-based decision trees.
@@ -54,7 +54,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 * **Backend:** Python 3.10+, Flask, PyTorch (TorchVision), MediaPipe, OpenCV, Pandas, Numpy, Requests.
 * **Frontend:** React 18, Vite, Chart.js, Tailwind CSS (Vite Inject & CDN).
@@ -63,7 +63,7 @@ Zenvia is a full-stack, state-of-the-art fashion intelligence platform that unif
 
 ---
 
-## 📂 Project Directory Structure
+##  Project Directory Structure
 
 ```
 zenvia/
@@ -95,7 +95,7 @@ zenvia/
 
 ---
 
-## ⚙️ Environment Variables & Secrets Configuration
+##  Environment Variables & Secrets Configuration
 
 To run successfully, the backend requires a `.env` file (or Repository Secrets in Hugging Face). 
 
@@ -115,7 +115,7 @@ EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 
 ---
 
-## 🚀 Local Installation & Setup
+##  Local Installation & Setup
 
 ### 1. Backend Server Setup
 Navigate to the `backend` folder, set up a python virtual environment, install packages, and start the app:
@@ -166,7 +166,7 @@ To serve the complete full-stack project under a single port (ideal for deployme
 
 ---
 
-## 🌐 Deploying to Hugging Face Spaces
+##  Deploying to Hugging Face Spaces
 
 Zenvia can be deployed directly to Hugging Face Spaces using the provided `Dockerfile`.
 
@@ -184,7 +184,7 @@ The container is built as a multi-stage environment:
 
 ---
 
-## 📬 EmailJS Template Customization
+##  EmailJS Template Customization
 For the outfit scheduling and morning reminder templates to format correctly, create a template in EmailJS (default ID: `template_f56nu7k`) with the following settings:
 * **To Email Field:** `{{to_email}}`
 * **Subject Field:** `{{subject}}`
@@ -196,13 +196,13 @@ For the outfit scheduling and morning reminder templates to format correctly, cr
 
 ---
 
-## 🎓 Academic Details
+##  Authors
 
 * **Title:** Zenvia: An Integrated System for Personalized Sizing, Color Recommendations, Virtual Wardrobe Management and Fashion Assistance
 * **Authors:** 
-  1. Madhuri Gottumukkala (gmadhuri2224@gmail.com)
-  2. Peesari Sathvik Reddy (reddysathvik2005@gmail.com)
-  3. Prachi Dusa (prachidusa_aiml@cbit.ac.in)
+  1. Madhuri Gottumukkala 
+  2. Peesari Sathvik Reddy
+  3. Prachi Dusa 
 * **Institution:** Department of AI & ML, Chaitanya Bharathi Institute of Technology (CBIT), Hyderabad, India.
 
 ---
